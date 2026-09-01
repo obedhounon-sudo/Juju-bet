@@ -1,3 +1,22 @@
+// ============ NAVIGATION ============
+function afficherPage(pageId) {
+    // Masquer toutes les sections
+    document.querySelectorAll('.page-section').forEach(section => {
+        section.style.display = 'none';
+    });
+    // Afficher la section demandée
+    const page = document.getElementById('page-' + pageId);
+    if (page) page.style.display = 'block';
+
+    // Mettre à jour les boutons actifs
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    const btnActif = document.getElementById('btn-' + pageId);
+    if (btnActif) btnActif.classList.add('active');
+}
+
+// ============ CHARGEMENT DES MATCHS ============
 async function chargerMatchs() {
     try {
         const response = await fetch('/api/matches');
@@ -50,8 +69,8 @@ function afficherMatchs(matchs) {
     }).join('');
 }
 
+// ============ PRONOSTIC ============
 function fairePronostic(matchId) {
-    // Vérifier si l'utilisateur est connecté
     const user = firebase.auth().currentUser;
     if (!user) {
         alert("Vous devez être connecté pour faire un pronostic.");
@@ -79,5 +98,14 @@ function fairePronostic(matchId) {
     }
 }
 
-// Charger les matchs au chargement de la page
-document.addEventListener('DOMContentLoaded', chargerMatchs);
+// ============ INITIALISATION ============
+document.addEventListener('DOMContentLoaded', () => {
+    // Navigation
+    document.getElementById('btn-accueil').addEventListener('click', () => afficherPage('accueil'));
+    document.getElementById('btn-matchs').addEventListener('click', () => afficherPage('matchs'));
+    document.getElementById('btn-classement').addEventListener('click', () => afficherPage('classement'));
+    document.getElementById('btn-profil').addEventListener('click', () => afficherPage('profil'));
+
+    // Charger les matchs au démarrage
+    chargerMatchs();
+});
