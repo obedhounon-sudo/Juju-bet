@@ -12,8 +12,18 @@ function afficherPage(pageId) {
     document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.classList.remove('active');
     });
-    const btnActif = document.getElementById('btn-' + pageId);
-    if (btnActif) btnActif.classList.add('active');
+    // Trouver le bouton cliqué via son texte ? Mieux : on ajoute un data-page
+    // Pour simplifier, on va juste mettre actif sur le bouton qui contient le texte correspondant
+    // Mais plus simple : on utilise un paramètre dans onclick (voir plus bas)
+}
+
+// Fonction pour gérer le clic et l'activation du bouton
+function afficherPageAvecBouton(pageId, bouton) {
+    afficherPage(pageId);
+    // Enlever active de tous
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    // Ajouter active au bouton cliqué
+    bouton.classList.add('active');
 }
 
 // ============ CHARGEMENT DES MATCHS ============
@@ -87,7 +97,6 @@ function fairePronostic(matchId) {
             away: parseInt(scoreAway)
         };
 
-        // Appeler la fonction de sauvegarde définie dans firebase.js
         sauvegarderPronostic(matchId, "score_final", prediction).then(res => {
             if (res.success) {
                 alert("Pronostic enregistré !");
@@ -100,12 +109,6 @@ function fairePronostic(matchId) {
 
 // ============ INITIALISATION ============
 document.addEventListener('DOMContentLoaded', () => {
-    // Navigation
-    document.getElementById('btn-accueil').addEventListener('click', () => afficherPage('accueil'));
-    document.getElementById('btn-matchs').addEventListener('click', () => afficherPage('matchs'));
-    document.getElementById('btn-classement').addEventListener('click', () => afficherPage('classement'));
-    document.getElementById('btn-profil').addEventListener('click', () => afficherPage('profil'));
-
     // Charger les matchs au démarrage
     chargerMatchs();
 });
