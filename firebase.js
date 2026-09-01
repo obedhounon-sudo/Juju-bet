@@ -14,7 +14,7 @@ firebase.initializeApp(firebaseConfig);
 
 // Références
 const auth = firebase.auth();
-const db = firebase.firestore(); // <-- ajout de Firestore
+const db = firebase.firestore();
 
 // Fonction d'inscription
 async function inscription(email, password) {
@@ -95,7 +95,7 @@ function afficherInscription() {
     }
 }
 
-// ========== NOUVELLE FONCTION : Sauvegarder un pronostic ==========
+// ========== Sauvegarder un pronostic ==========
 async function sauvegarderPronostic(matchId, type, prediction) {
     const user = auth.currentUser;
     if (!user) {
@@ -108,8 +108,8 @@ async function sauvegarderPronostic(matchId, type, prediction) {
             userId: user.uid,
             email: user.email,
             matchId: matchId,
-            type: type,           // ex: "score_final", "corners", etc.
-            prediction: prediction, // ex: { home: 2, away: 1 }
+            type: type,
+            prediction: prediction,
             date: firebase.firestore.FieldValue.serverTimestamp()
         });
         return { success: true };
@@ -117,4 +117,4 @@ async function sauvegarderPronostic(matchId, type, prediction) {
         console.error("Erreur sauvegarde pronostic:", error);
         return { success: false, message: error.message };
     }
-        }
+}
