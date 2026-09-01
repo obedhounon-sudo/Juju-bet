@@ -1,16 +1,16 @@
-// Fonction pour charger les matchs depuis notre API
 async function chargerMatchs() {
     try {
         const response = await fetch('/api/matches');
         const data = await response.json();
-        if (data.matches && data.matches.length > 0) {
+        if (data.error) {
+            document.getElementById('matchesGrid').innerHTML = `<p>Erreur API : ${data.error}</p>`;
+        } else if (data.matches && data.matches.length > 0) {
             afficherMatchs(data.matches);
         } else {
             document.getElementById('matchesGrid').innerHTML = '<p>Aucun match trouvé.</p>';
         }
     } catch (error) {
-        console.error('Erreur de chargement:', error);
-        document.getElementById('matchesGrid').innerHTML = '<p>Erreur de chargement des matchs.</p>';
+        document.getElementById('matchesGrid').innerHTML = `<p>Erreur : ${error.message}</p>`;
     }
 }
 
