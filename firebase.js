@@ -12,8 +12,9 @@ const firebaseConfig = {
 // Initialiser Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Référence à l'authentification
+// Références
 const auth = firebase.auth();
+const db = firebase.firestore(); // <-- ajout de Firestore
 
 // Fonction d'inscription
 async function inscription(email, password) {
@@ -49,7 +50,6 @@ async function deconnexion() {
 auth.onAuthStateChanged(user => {
     const nav = document.querySelector('.nav');
     if (user) {
-        // Utilisateur connecté : afficher email + bouton déconnexion
         if (!document.getElementById('userInfo')) {
             const userDiv = document.createElement('div');
             userDiv.id = 'userInfo';
@@ -60,7 +60,6 @@ auth.onAuthStateChanged(user => {
             nav.appendChild(userDiv);
         }
     } else {
-        // Pas connecté : afficher boutons connexion/inscription
         const existing = document.getElementById('userInfo');
         if (existing) existing.remove();
         if (!document.getElementById('authBtns')) {
@@ -95,3 +94,27 @@ function afficherInscription() {
         });
     }
 }
+
+// ========== NOUVELLE FONCTION : Sauvegarder un pronostic ==========
+async function sauvegarderPronostic(matchId, type, prediction) {
+    const user = auth.currentUser;
+    if (!user) {
+        alert("Vous devez être connecté pour faire un pronostic.");
+        return { success: false, message: "Non connecté" };
+    }
+
+    try {
+        await db.collection("pronostics").add({
+            userId: user.uid,
+            email: user.email,
+            matchId: matchId,
+            type: type,           // ex: "score_final", "corners", etc.
+            prediction: prediction, // ex: { home: 2, away: 1 }
+            date: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        return { success: true };
+    } catch (error) {
+        console.error("Erreur sauvegarde pronostic:", error);
+        return { success: false, message: error.message };
+    }
+        }
