@@ -7,14 +7,6 @@ function afficherPage(pageId) {
     // Afficher la section demandée
     const page = document.getElementById('page-' + pageId);
     if (page) page.style.display = 'block';
-
-    // Mettre à jour les boutons actifs
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    // Trouver le bouton cliqué via son texte ? Mieux : on ajoute un data-page
-    // Pour simplifier, on va juste mettre actif sur le bouton qui contient le texte correspondant
-    // Mais plus simple : on utilise un paramètre dans onclick (voir plus bas)
 }
 
 // Fonction pour gérer le clic et l'activation du bouton
@@ -97,6 +89,7 @@ function fairePronostic(matchId) {
             away: parseInt(scoreAway)
         };
 
+        // Appeler la fonction de sauvegarde définie dans firebase.js
         sauvegarderPronostic(matchId, "score_final", prediction).then(res => {
             if (res.success) {
                 alert("Pronostic enregistré !");
