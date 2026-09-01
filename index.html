@@ -16,50 +16,68 @@
             <span class="logo-bet">BET</span>
         </div>
         <nav class="nav">
-            <button class="nav-btn active">Accueil</button>
-            <button class="nav-btn">Matchs</button>
-            <button class="nav-btn">Classement</button>
-            <button class="nav-btn">Profil</button>
+            <button class="nav-btn active" id="btn-accueil">Accueil</button>
+            <button class="nav-btn" id="btn-matchs">Matchs</button>
+            <button class="nav-btn" id="btn-classement">Classement</button>
+            <button class="nav-btn" id="btn-profil">Profil</button>
         </nav>
     </header>
 
     <!-- Main Content -->
     <main class="main">
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1>Pronostiquez sur vos matchs préférés</h1>
-            <p>Rejoignez la communauté Juju Bet et montrez vos talents de pronostiqueur</p>
-            <button class="cta-btn">Commencer maintenant</button>
+        <!-- Section Accueil -->
+        <section id="page-accueil" class="page-section">
+            <section class="hero">
+                <h1>Pronostiquez sur vos matchs préférés</h1>
+                <p>Rejoignez la communauté Juju Bet et montrez vos talents de pronostiqueur</p>
+                <button class="cta-btn">Commencer maintenant</button>
+            </section>
+
+            <section class="matches-section">
+                <h2>Matchs du jour</h2>
+                <div class="matches-grid" id="matchesGrid">
+                    <!-- Les matchs seront injectés ici par JavaScript -->
+                </div>
+            </section>
+
+            <section class="how-it-works">
+                <h2>Comment ça marche ?</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Choisissez un match</h3>
+                        <p>Sélectionnez parmi tous les championnats disponibles</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Faites votre pronostic</h3>
+                        <p>Score final, corners, mi-temps et plus encore</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Gagnez des points</h3>
+                        <p>Accumulez des points et grimpez dans le classement</p>
+                    </div>
+                </div>
+            </section>
         </section>
 
-        <!-- Matchs du jour -->
-        <section class="matches-section">
-            <h2>Matchs du jour</h2>
-            <div class="matches-grid" id="matchesGrid">
-                <!-- Les matchs seront injectés ici par JavaScript -->
-            </div>
+        <!-- Section Matchs (masquée au départ) -->
+        <section id="page-matchs" class="page-section" style="display:none;">
+            <h2>Tous les matchs</h2>
+            <p>Ici s'afficheront les matchs par championnat (à venir).</p>
         </section>
 
-        <!-- Comment ça marche -->
-        <section class="how-it-works">
-            <h2>Comment ça marche ?</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Choisissez un match</h3>
-                    <p>Sélectionnez parmi tous les championnats disponibles</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Faites votre pronostic</h3>
-                    <p>Score final, corners, mi-temps et plus encore</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Gagnez des points</h3>
-                    <p>Accumulez des points et grimpez dans le classement</p>
-                </div>
-            </div>
+        <!-- Section Classement (masquée) -->
+        <section id="page-classement" class="page-section" style="display:none;">
+            <h2>Classement des pronostiqueurs</h2>
+            <p>Le classement sera bientôt disponible.</p>
+        </section>
+
+        <!-- Section Profil (masquée) -->
+        <section id="page-profil" class="page-section" style="display:none;">
+            <h2>Mon profil</h2>
+            <p>Gérez vos informations et consultez votre historique.</p>
         </section>
     </main>
 
@@ -67,14 +85,16 @@
     <footer class="footer">
         <p>&copy; 2024 Juju Bet - Tous droits réservés</p>
     </footer>
-<!-- Firebase App (le core) -->
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<!-- Firebase Auth -->
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-<!-- Notre script Firebase -->
-        <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
-<script src="firebase.js"></script>
-<script src="script.js"></script>
+
+    <!-- Firebase App (le core) -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <!-- Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <!-- Notre script Firebase -->
+    <script src="firebase.js"></script>
+    <!-- Script principal -->
     <script src="script.js"></script>
 </body>
-                                                </html>
+</html>
