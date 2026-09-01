@@ -51,7 +51,32 @@ function afficherMatchs(matchs) {
 }
 
 function fairePronostic(matchId) {
-    alert(`Pronostic pour le match ${matchId}\n\nFonctionnalité bientôt disponible !`);
+    // Vérifier si l'utilisateur est connecté
+    const user = firebase.auth().currentUser;
+    if (!user) {
+        alert("Vous devez être connecté pour faire un pronostic.");
+        return;
+    }
+
+    // Demander le score final (simple pour l'instant)
+    const scoreHome = prompt("Score de l'équipe à domicile :");
+    const scoreAway = prompt("Score de l'équipe à l'extérieur :");
+
+    if (scoreHome !== null && scoreAway !== null && !isNaN(scoreHome) && !isNaN(scoreAway)) {
+        const prediction = {
+            home: parseInt(scoreHome),
+            away: parseInt(scoreAway)
+        };
+
+        // Appeler la fonction de sauvegarde définie dans firebase.js
+        sauvegarderPronostic(matchId, "score_final", prediction).then(res => {
+            if (res.success) {
+                alert("Pronostic enregistré !");
+            } else {
+                alert("Erreur : " + res.message);
+            }
+        });
+    }
 }
 
 // Charger les matchs au chargement de la page
